@@ -240,6 +240,14 @@ public class ChallengeTriggerZone : MonoBehaviour
 
         if (success && challengeData != null)
         {
+            // Check if this is a jump challenge
+            var poseList = challengeData.poseRequirements;
+            if (poseList.Exists(p => p.PoseName.ToLower().Contains("jump")))
+            {
+                // Perform the jump
+                playerController.PerformJump(forwardJumpForce, upwardJumpForce);
+            }
+
             // Add auto walk component and initialize it only if we have somewhere to go
             var player = playerController.gameObject;
             bool shouldAddAutoWalk = !isStandalone || nextChallengePoint != null;
